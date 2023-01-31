@@ -6,6 +6,13 @@ pipeline {
      }
     stages {
         
+        stage('Clean') {
+         steps{
+            sh 'chmod +x ./micro_holamundo/gradlew'
+            sh './micro_holamundo/gradlew --b ./micro_holamundo/build.gradle clean'
+         }
+        }
+        
         stage('Build') {
             steps {
                 script{
