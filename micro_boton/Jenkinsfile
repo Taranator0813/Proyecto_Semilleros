@@ -12,7 +12,7 @@ pipeline {
                 ls -la
                 cd micro_boton
                 ls -la
-                ./gradle build
+                gradle build
                """
                 }
             }
