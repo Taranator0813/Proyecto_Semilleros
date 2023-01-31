@@ -33,12 +33,16 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh"""
-                cd micro_holamundo
-                docker build -t micro_holamundo:1.0 .
-                docker images
-                docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-               """
+                	echo "------------>Build<------------"
+			//Construir sin tarea test que se ejecutó previamente
+			sh './microservicio/gradlew --b ./microservicio/build.gradle build -x test'
+                
+                //sh"""
+                //cd micro_holamundo
+                //docker build -t micro_holamundo:1.0 .
+                //docker images
+                //docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+               //"""
             
             }
         }
