@@ -25,15 +25,11 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                script{
-                //sh 'gradle docker'
-                """
+                sh"""
+                cd micro_boton
                 docker build -t micro_boton:1.0 .
-                sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-                //sh 'docker tag mi-proyecto $DOCKER_USER/mi-proyecto'
-                //sh 'docker push $DOCKER_USER/mi-proyecto'
-                echo 'succesfull'}
-                """
+                docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+               """
             }
             }
         }
