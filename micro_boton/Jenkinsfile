@@ -14,7 +14,7 @@ pipeline {
                 ls -la
                 gradle build
                """
-            }
+            
             }
         }
         stage('test') {
