@@ -5,6 +5,25 @@ pipeline {
         dockerTool 'Docker 20.10.21'
      }
     stages {
+        
+        stage('Checkout'){
+	steps{
+		echo "------------>Checkout<------------"
+		checkout([
+			$class: 'GitSCM', 
+			branches: [[name: '*/master']], 
+			doGenerateSubmoduleConfigurations: false, 
+			extensions: [], 
+			gitTool: 'Default', 
+			submoduleCfg: [], 
+			userRemoteConfigs: [[
+				url:'https://github.com/Taranator0813/Proyecto_Semilleros.git'
+				]]
+			])
+		}
+	}
+
+        
         stage('Build') {
             steps {
                 script{
@@ -27,7 +46,6 @@ pipeline {
             steps {
                 sh"""
                 cd micro_holamundo
-                docker run -v /var/run/docker.sock:/var/run/docker.sock -ti docker
                 docker build -t micro_holamundo:1.0 .
                 docker images
                 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
