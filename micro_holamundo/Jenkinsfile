@@ -6,24 +6,6 @@ pipeline {
      }
     stages {
         
-        stage('Checkout'){
-	steps{
-		echo "------------>Checkout<------------"
-		checkout([
-			$class: 'GitSCM', 
-			branches: [[name: '*/master']], 
-			doGenerateSubmoduleConfigurations: false, 
-			extensions: [], 
-			gitTool: 'Default', 
-			submoduleCfg: [], 
-			userRemoteConfigs: [[
-				url:'https://github.com/Taranator0813/Proyecto_Semilleros.git'
-				]]
-			])
-		}
-	}
-
-        
         stage('Build') {
             steps {
                 script{
