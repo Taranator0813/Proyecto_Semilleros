@@ -9,9 +9,7 @@ pipeline {
             steps {
                 script{
                 sh """
-                ls -la
-                cd micro_boton
-                ls -la
+                cd micro_imagen
                 gradle build
                """
                 }
@@ -27,7 +25,7 @@ pipeline {
             steps {
                 sh"""
                 cd micro_boton
-                docker build -t micro_boton:1.0 .
+                docker build -t micro_imagen:1.0 .
                 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
                """
             
