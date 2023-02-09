@@ -5,9 +5,7 @@ pipeline {
         //dockerTool 'Docker 20.10.21'
         sonarqube 'SonarQube'
      }
-    plugins {
-  id "org.sonarqube" version "3.0"
-}
+   
     stages {
         stage('Build') {
             steps {
