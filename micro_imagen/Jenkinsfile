@@ -40,11 +40,12 @@ pipeline {
         }*/
        stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('sonarServer') { 
-                  sh"./gradlew sonarqube \
+                withSonarQubeEnv('Sonar') {
+                  sh" cd micro_imagen
+                    gradle sonarqube \
                   -Dsonar.projectKey=Sonar \
-                  -Dsonar.host.url=http://127.0.0.1:46543 \
-                  -Dsonar.login=f9d07ba96d2778ca485fffbc942172ce5da56409"
+                  -Dsonar.host.url=http://10.0.200.102:9000 \
+                  -Dsonar.login=af6d7d25c0eeecbfc1baf88a0d74aef0c8173810"
                 } 
             }
         }
