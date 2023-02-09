@@ -24,7 +24,7 @@ pipeline {
                 echo 'test succesfull'
             }
         }
-        stage('Build Docker Image') {
+       /* stage('Build Docker Image') {
             steps {
                 sh"""
                 cd micro_imagen
@@ -35,7 +35,17 @@ pipeline {
                """
             
             }
-        }
+        }*/
+            stage('SonarQube analysis') { 
+                steps {
+                    withSonarQubeEnv('sonarServer') {
+                       sh " ./gradlew sonarqube \
+                            -Dsonar.projectKey=Sonar \
+                            -Dsonar.host.url=http://127.0.0.1:46543 \
+                            -Dsonar.login=f9d07ba96d2778ca485fffbc942172ce5da56409"
+                    }    
+                } 
+            }
         stage('Push Docker Image') {
             steps {
                
