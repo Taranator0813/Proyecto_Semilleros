@@ -3,14 +3,16 @@ pipeline {
     tools {
         gradle 'Gradle 7.5.1' 
         //dockerTool 'Docker 20.10.21'
+        
      }
+   
     stages {
         stage('Build') {
             steps {
                 script{
                 sh """
                 ls -la
-                cd micro_imagen
+                cd micro_holamundo
                 ls -la
                 pwd
                 gradle build
@@ -18,23 +20,38 @@ pipeline {
                 }
             }
         }
-        stage('test') {
+       /* stage('test') {
             steps {
                 //sh 'gradle docker'
                 echo 'test succesfull'
             }
-        }
-        stage('Build Docker Image') {
+        }*/
+       /* stage('Build Docker Image') {
             steps {
                 sh"""
-                cd micro_imagen
+                cd micro_holamundo
                 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-                docker build -t testjenkinsdocker:1.0 .
-                docker push $DOCKER_USER/testjenkinsdocker:1.0
+                docker build -t micro_imagen:1.0 .
+                docker push $DOCKER_USER/micro_imagen:1.0
                 
                """
             
             }
+        }*/
+              stage('test') {
+            steps {
+                script{
+                withSonarQubeEnv('Sonar') {    
+                    sh """
+                        cd micro_holamundo   
+                        gradle sonarqube \
+                        -Dsonar.projectKey=Sonar \
+                        -Dsonar.host.url=http://10.0.229.1:9000 \
+                        -Dsonar.login=3670318227e397ae3051173da608edc107531fb4
+                     """
+            }
+               }     
+          }
         }
         stage('Push Docker Image') {
             steps {
