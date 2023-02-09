@@ -20,12 +20,12 @@ pipeline {
                 }
             }
         }
-        stage('test') {
+       /* stage('test') {
             steps {
                 //sh 'gradle docker'
                 echo 'test succesfull'
             }
-        }
+        }*/
        /* stage('Build Docker Image') {
             steps {
                 sh"""
