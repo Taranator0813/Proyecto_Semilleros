@@ -38,16 +38,20 @@ pipeline {
             
             }
         }*/
-       stage('SonarQube analysis') {
+              stage('test') {
             steps {
-                withSonarQubeEnv('Sonar') {
-                  sh" cd micro_imagen
-                    gradle sonarqube \
-                  -Dsonar.projectKey=Sonar \
-                  -Dsonar.host.url=http://10.0.200.102:9000 \
-                  -Dsonar.login=af6d7d25c0eeecbfc1baf88a0d74aef0c8173810"
-                } 
+                script{
+                withSonarQubeEnv('Sonar') {    
+      sh """
+   cd micro_imagen   
+   gradle sonarqube \
+  -Dsonar.projectKey=Sonar \
+  -Dsonar.host.url=http://10.0.200.102:9000 \
+  -Dsonar.login=af6d7d25c0eeecbfc1baf88a0d74aef0c8173810
+        """
             }
+               }     
+          }
         }
         stage('Push Docker Image') {
             steps {
