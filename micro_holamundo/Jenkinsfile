@@ -1,5 +1,31 @@
 pipeline {
-    agent any
+      agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
+          - name: docker
+            image: docker:latest
+            command:
+            - cat
+            tty: true
+            volumeMounts:
+             - mountPath: /var/run/docker.sock
+               name: docker-sock
+          volumes:
+          - name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock    
+        '''
+    }
+  }
     tools {
         gradle 'Gradle 7.5.1' 
         //dockerTool 'Docker 20.10.21'
@@ -26,7 +52,7 @@ pipeline {
                 echo 'test succesfull'
             }
         }*/
-       /* stage('Build Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 sh"""
                 cd micro_holamundo
@@ -37,7 +63,7 @@ pipeline {
                """
             
             }
-        }*/
+        }
               stage('test') {
             steps {
                 script{
