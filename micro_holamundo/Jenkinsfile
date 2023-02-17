@@ -1,31 +1,5 @@
 pipeline {
-      agent {
-    kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          containers:
-          - name: maven
-            image: maven:alpine
-            command:
-            - cat
-            tty: true
-          - name: docker
-            image: docker:latest
-            command:
-            - cat
-            tty: true
-            volumeMounts:
-             - mountPath: /var/run/docker.sock
-               name: docker-sock
-          volumes:
-          - name: docker-sock
-            hostPath:
-              path: /var/run/docker.sock    
-        '''
-    }
-  }
+      agent any
     tools {
         gradle 'Gradle 7.5.1' 
         //dockerTool 'Docker 20.10.21'
@@ -72,7 +46,7 @@ pipeline {
    cd micro_holamundo   
    gradle sonarqube \
   -Dsonar.projectKey=Sonar \
-  -Dsonar.host.url=http://10.244.0.17:9000 \
+  -Dsonar.host.url=http://10.0.143.236:9000 \
   -Dsonar.login=3670318227e397ae3051173da608edc107531fb4
         """
             }
