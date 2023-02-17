@@ -1,5 +1,5 @@
 pipeline {
-      agent any
+    agent any
     tools {
         gradle 'Gradle 7.5.1' 
         //dockerTool 'Docker 20.10.21'
@@ -26,7 +26,7 @@ pipeline {
                 echo 'test succesfull'
             }
         }*/
-        stage('Build Docker Image') {
+        /* stage('Build Docker Image') {
             steps {
                 sh"""
                 cd micro_holamundo
@@ -37,7 +37,7 @@ pipeline {
                """
             
             }
-        }
+        }*/
               stage('test') {
             steps {
                 script{
@@ -47,7 +47,7 @@ pipeline {
    gradle sonarqube \
   -Dsonar.projectKey=Sonar \
   -Dsonar.host.url=http://10.0.143.236:9000 \
-  -Dsonar.login=3670318227e397ae3051173da608edc107531fb4
+  -Dsonar.login=573477f7c70daa99960ecbc70fc405343233b8e5
         """
             }
                }     
