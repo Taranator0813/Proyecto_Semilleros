@@ -1,34 +1,58 @@
 pipeline {
     agent any
+    
+    environment {
+        gitcommit = "${gitcommit}"
+    }
+    
     tools {
         gradle 'Gradle 7.5.1' 
         //dockerTool 'Docker 20.10.21' 
      }
    
     stages {
-        stage('Build') {
+        stage('Verificación SCM') {
+          steps {
+               checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Taranator0813/Proyecto_Semilleros.git']])
+            script {
+              checkout scm
+              sh "git rev-parse --short HEAD > .git/commit-id"  
+              gitcommit = readFile('.git/commit-id').trim()
+            }
+          }  
+        }
+        stage('Build Gradle') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Taranator0813/Proyecto_Semilleros.git']])
                 script{
-                sh """
-                ls -la
-                cd micro_holamundo
-                ls -la
-                pwd
-                gradle init
-                gradle build
-               """
+                 sh """
+                    ls -la
+                    cd micro_holamundo
+                    ls -la
+                    pwd
+                    gradle init
+                    gradle build
+                    """
+             
                 }
             }
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
       
-        /* stage('test') {
-            steps {
-                //sh 'gradle docker'
-                echo 'test succesfull'
+       stage('Test SonarQube') {
+           steps {
+              script{
+                withSonarQubeEnv('Sonar') {
+                    sh """
+                    cd micro_holamundo   
+                    gradle sonarqube \
+                    -Dsonar.projectKey=Sonar \
+                    -Dsonar.host.url=http://10.0.143.236:9000 \
+                    -Dsonar.login=573477f7c70daa99960ecbc70fc405343233b8e5
+                    """
+                    }
+                }     
             }
-        }*/
+        }
         
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        
@@ -52,22 +76,6 @@ pipeline {
         
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
        
-        stage('test') {
-           steps {
-              script{
-                withSonarQubeEnv('Sonar') {
-                    sh """
-                    cd micro_holamundo   
-                    gradle sonarqube \
-                    -Dsonar.projectKey=Sonar \
-                    -Dsonar.host.url=http://10.0.143.236:9000 \
-                    -Dsonar.login=573477f7c70daa99960ecbc70fc405343233b8e5
-                    """
-                    }
-                }     
-            }
-        }
- 
         
     }
 }
