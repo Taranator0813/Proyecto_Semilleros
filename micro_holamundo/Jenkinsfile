@@ -32,7 +32,7 @@ pipeline {
         
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        
-        /* stage('Build and Push Docker Image') {
+        stage('Build and Push Docker Image') {
             agent {
                label "slave"
             } 
@@ -40,15 +40,19 @@ pipeline {
                 script {
                     sh"""
                     cd micro_holamundo
-                    docker version
-                    docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-                    docker build -t $DOCKER_USER/micro_holamundo:3.0 .
-                    docker push $DOCKER_USER/micro_holamundo:3.0
+                    sudo docker version
+                    sudo docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+                    sudo docker build -t $DOCKER_USER/micro_holamundo:2.0 .
+                    sudo docker push $DOCKER_USER/micro_holamundo:2.0
                     """
-                    echo 'image succesfull in dockerHub'
+                   
+                }
+                 post {
+                   success { 
+                        echo '---------------------image succesfull in dockerHub----------------------------'
                 }
             }
-        }*/
+        }
         
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
        
