@@ -45,12 +45,7 @@ pipeline {
                     sudo docker build -t $DOCKER_USER/micro_holamundo:3.0 .
                     sudo docker push $DOCKER_USER/micro_holamundo:3.0
                     """
-                     post {
-                   success { 
-                        echo '---------------------image succesfull in dockerHub----------------------------'
-                    }
-                 }
-                   
+                    echo '---------------------image succesfull in dockerHub----------------------------'
                 }
             }
         }
