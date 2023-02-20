@@ -30,6 +30,7 @@ pipeline {
                 }
             }
         }
+        
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
       
        stage('Test SonarQube') {
@@ -69,7 +70,21 @@ pipeline {
         }
         
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-       
+       stage('K8S Deploy') {
+            steps {
+                script {
+		sh """
+                    kubectl version --client --output=yaml   
+                    az login
+                    az account set --subscription 1945e913-3785-47cc-988f-aeed28c8eae7
+                    az aks get-credentials --resource-group pruebas_terraform1 --name aks2 
+		    cd micro_imagen/k8s
+                    ls
+		    kubectl apply -f k8s/micro_imagen.yaml  
+                    """
+                }
+            }
+        }
         
     }
 }
