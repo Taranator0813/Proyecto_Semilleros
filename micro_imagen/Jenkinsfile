@@ -47,7 +47,7 @@ pipeline {
    gradle sonarqube \
   -Dsonar.projectKey=Sonar \
   -Dsonar.host.url=http://10.0.98.50:9000 \
-  -Dsonar.login=af6d7d25c0eeecbfc1baf88a0d74aef0c8173810
+  -Dsonar.login=482761e262344923c527c9de65da0f1929a0955a
         """
             }
                }     
