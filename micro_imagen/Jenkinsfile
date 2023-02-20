@@ -1,63 +1,75 @@
 pipeline {
     agent any
+    
+    environment {
+        gitcommit = "${gitcommit}"
+    }
+    
     tools {
         gradle 'Gradle 7.5.1' 
-        //dockerTool 'Docker 20.10.21'
-        
+        //dockerTool 'Docker 20.10.21' 
      }
    
     stages {
+       
         stage('Build') {
             steps {
+                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Taranator0813/Proyecto_Semilleros.git']])
                 script{
-                sh """
-                ls -la
-                cd micro_imagen
-                ls -la
-                pwd
-                gradle build
-               """
+                  sh "git rev-parse --short HEAD > .git/commit-id"  
+                    gitcommit = readFile('.git/commit-id').trim()
+                 sh """
+                    ls -la
+                    cd micro_imagen
+                    ls -la
+                    pwd
+                    gradle init
+                    gradle build
+                    """
+             
                 }
             }
         }
-       /* stage('test') {
-            steps {
-                //sh 'gradle docker'
-                echo 'test succesfull'
-            }
-        }*/
-       /* stage('Build Docker Image') {
-            steps {
-                sh"""
-                cd micro_imagen
-                docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-                docker build -t micro_imagen:1.0 .
-                docker push $DOCKER_USER/micro_imagen:1.0
-                
-               """
-            
-            }
-        }*/
-              stage('test') {
-            steps {
-                script{
-                withSonarQubeEnv('Sonar') {    
-      sh """
-   cd micro_imagen   
-   gradle sonarqube \
-  -Dsonar.projectKey=Sonar \
-  -Dsonar.host.url=http://10.0.98.50:9000 \
-  -Dsonar.login=482761e262344923c527c9de65da0f1929a0955a
-        """
-            }
-               }     
-          }
-        }
-        stage('Push Docker Image') {
-            steps {
-               
-                echo 'succesfull'
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
+      
+       stage('Test SonarQube') {
+           steps {
+              script{
+                withSonarQubeEnv('Sonar') {
+                    sh """
+                    cd micro_imagen   
+                    gradle sonarqube \
+                    -Dsonar.projectKey=Sonar \
+                    -Dsonar.host.url=http://10.0.98.50:9000 \
+                    -Dsonar.login=482761e262344923c527c9de65da0f1929a0955a
+                    """
+                    }
+                }     
             }
         }
+        
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       
+        stage('Build and Push Docker Image') {
+            agent {
+               label "slave"
+            } 
+            steps {
+                script {
+                    sh"""
+                    cd micro_imagen
+                    sudo docker version
+                    sudo docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+                    sudo docker build -t $DOCKER_USER/micro_imagen:${gitcommit} .
+                    sudo docker push $DOCKER_USER/micro_imagen:${gitcommit}
+                    """
+                    echo '---------------------image succesfull in dockerHub----------------------------'
+                }
+            }
+        }
+        
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+       
+        
     }
 }
