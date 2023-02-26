@@ -1,0 +1,68 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ms
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest
+  namespace: ms
+spec:
+  selector:
+    matchLabels:
+      app: rest
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rest
+    spec:
+      containers:
+        - name: rest
+          image: estefaniam/micro_holamundo:3.0
+         
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serviciorest
+  namespace: ms
+spec:
+  ports:
+    - protocol: "TCP"
+      port: 8080       # The port inside the cluster
+      targetPort: 8080  # The port exposed by the service
+  type: ClusterIP       # Type of service
+  selector:
+    app: rest
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: micros-ingress
+  namespace: ms
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - micros.holamundo
+    secretName: micros-secret
+  rules:
+  - host: micros.holamundo
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: serviciorest
+            port:
+              number: 8080
+
