@@ -54,7 +54,7 @@ pipeline {
                     cd micro_holamundo
                     sudo docker version
                     java --verion
-                    sudo docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+                    sudo docker login -u estefaniam -p dckr_pat_Mcue9uG-rCjdzWfAD9WfcQJu3Sw
                    
                     """
                     echo '---------------------image succesfull in dockerHub----------------------------'
