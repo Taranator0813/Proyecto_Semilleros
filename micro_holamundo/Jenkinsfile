@@ -20,8 +20,62 @@ pipeline {
                     gradle init
                     gradle build
                     """
-             
                 }
+            }
+        }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
+      
+       stage('Test SonarQube') {
+           steps {
+              script{
+                withSonarQubeEnv('Sonar') {
+                    sh """
+                    cd micro_holamundo   
+                    gradle sonarqube \
+                    -Dsonar.projectKey=Sonar \
+                    -Dsonar.host.url=http://192.168.5.154:9000 \
+                    -Dsonar.login=900aa9d80557ced8d26375cb0a53f0c1b6f00310
+                    """
+                    }
+                }     
+            }
+        }
+        
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       
+        stage('Build and Push Docker Image') {
+            agent {
+               label "slave"
+            } 
+            steps {
+                script {
+                    sh"""
+                    cd micro_holamundo
+                    sudo docker version
+                    java --version
+                    sudo docker login -u estefaniam -p dckr_pat_Mcue9uG-rCjdzWfAD9WfcQJu3Sw
+                    sudo docker build -t estefaniam/micro_holamundo:1.0 .
+                    sudo docker push estefaniam/micro_holamundo:1.0
+                    """
+                    echo '---------------------image succesfull in dockerHub----------------------------'
+                }
+            }
+        }
+        
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+        stage('Deployment') {
+            steps {
+                script{
+                sh """
+                az login --service-principal --username 9a87d9ee-83e7-4f73-9cc7-df1cd7c96e0b --password 8cw8Q~xnETWAeNMpBeM.HJxpqabb4SOJV.PH~b4E --tenant bee67b52-742a-4676-8b10-d45d07670df4
+                az account set --subscription 494f5c24-bc0b-4e41-bf12-ff9065e0f1ef
+                az aks get-credentials --resource-group Proyecto_DevOps --name stack6-k8s
+                cd micro_holamundo/k8s
+                ls -la
+                kubectl apply -f ms-rest.yaml
+                """
+                }
+                echo 'succesfull'
             }
         }
 
