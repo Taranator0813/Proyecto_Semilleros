@@ -33,8 +33,8 @@ pipeline {
                     cd micro_holamundo   
                     gradle sonarqube \
                     -Dsonar.projectKey=Sonar \
-                    -Dsonar.host.url=http://192.168.5.154:9000 \
-                    -Dsonar.login=900aa9d80557ced8d26375cb0a53f0c1b6f00310
+                    -Dsonar.host.url=http://192.168.7.155:9000 \
+                    -Dsonar.login=00cb61c19da81dce7f8a6c586066d6d1ce86c963
                     """
                     }
                 }     
