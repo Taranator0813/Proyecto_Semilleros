@@ -74,10 +74,9 @@ pipeline {
                 az login --service-principal --username 915448ca-60b9-42fc-9186-ec5ec0e0999d --password 6Fh8Q~mDu107bhiDSCjjQGgxF-G2You_UqsP0bzs --tenant 6d9df840-09c6-4033-8e44-3106589f23d6
                 az account set --subscription 0de38cb9-a6f3-4122-9a42-d0cef7adf45a
                 az aks get-credentials --resource-group Proyecto_DevOps --name stack_Banc_Pop-k8s
-                cd micro_holamundo/k8s
-                ls -la
-                kubectl apply -f ms-rest.yaml
                 cd micro_holamundo/certs
+                ls -la
+              
                 kubectl create secret micros-secret -n devops-tools  --key=micro_holamundo.key --cert=micro_holamundo.crt
                 """
                 }
