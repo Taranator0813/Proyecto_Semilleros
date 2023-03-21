@@ -28,7 +28,7 @@ pipeline {
        stage('Test SonarQube') {
            steps {
               script{
-                def scannerHome = tool 'Sonarqube'
+                
                 withSonarQubeEnv('Sonar') {
                     sh """
                     cd micro_holamundo
@@ -37,7 +37,6 @@ pipeline {
                     -Dsonar.projectKey=Sonar \
                     -Dsonar.host.url=http://192.168.7.155:9000 \
                     -Dsonar.login=6146c323d0243736f2878415044ed6d2aeaa7d96
-                    -Dsonar.sourceEncoding=UTF-8 \
                     -Dsonar.language=java
                    """
                     }
