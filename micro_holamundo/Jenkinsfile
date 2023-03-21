@@ -28,7 +28,7 @@ pipeline {
        stage('Test SonarQube') {
            steps {
               script{
-                
+                def scannerHome = tool 'Sonarqube'
                 withSonarQubeEnv('Sonar') {
                     sh """
                     cd micro_holamundo
