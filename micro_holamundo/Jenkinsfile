@@ -88,7 +88,7 @@ pipeline {
       steps {
         sh """
 
-         c:\Users\emunozpe\Desktop\apache-jmeter-5.5\bin\jmeter.bat -n -t "micro_holamundo\\Test_Plans\\PetStore-End-to-End-Flow.jmx" -p "Test_Plans\\data\\PetStore_LoadTest.properties"
+         c:\Users\emunozpe\Desktop\apache-jmeter-5.5\bin\jmeter.bat -n -t "micro_holamundo\Test_Plans\PetStore-End-to-End-Flow.jmx" -p "Test_Plans\data\PetStore_LoadTest.properties"
         """      
       }
     }
