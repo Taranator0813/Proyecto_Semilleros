@@ -72,7 +72,7 @@ pipeline {
             steps {
                 script{
                 sh """
-                az login --service-principal --username 39fec8b9-dfd9-414e-9a8d-9bdf8c9e3040 --password 4a631951-3fb6-4107-a1cb-e0eb64086d9e --tenant 6d9df840-09c6-4033-8e44-3106589f23d6
+                az login --service-principal --username 39fec8b9-dfd9-414e-9a8d-9bdf8c9e3040 --password 42M8Q~bzH3nGoGIDo1EAaazCletu6hClh4pLjcIk --tenant 6d9df840-09c6-4033-8e44-3106589f23d6
                 az account set --subscription 0de38cb9-a6f3-4122-9a42-d0cef7adf45a
                 az aks get-credentials --resource-group Proyecto_DevOps --name stack_Banc_Pop-k8s
                 cd micro_holamundo/k8s
