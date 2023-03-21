@@ -103,10 +103,7 @@ pipeline {
             steps {
                 script {
                     sh"""
-                     ls -la
-                     cd..
-                     ls -la
-                     cd..
+                     pwd
                      cd apache-jmeter-5.5/bin/
                     ./jmeter --version
                     """
