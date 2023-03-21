@@ -77,7 +77,7 @@ pipeline {
                 cd micro_holamundo/certs
                 ls -la
               
-                kubectl create secret micros-secret -n devops-tools  --key=micro_holamundo.key --cert=micro_holamundo.crt
+                kubectl create secret micros-secret -n devops-tools --key=micro_holamundo.key --cert=micro_holamundo.crt
                 """
                 }
                 echo 'succesfull'
