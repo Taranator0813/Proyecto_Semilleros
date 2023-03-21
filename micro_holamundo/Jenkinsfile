@@ -83,16 +83,14 @@ pipeline {
             }
         }
 
-         stage('Execute JMeter') {
-            steps {
-                 script{
-                sh """
-                 c:\\Tools\\apache-jmeter-5.5\\bin\\jmeter.bat -n -t "micro_holamundo\\Test_Plans\\PetStore-End-to-End-Flow.jmx" -p "micro_holamundo\\Test_Plans\\data\\PetStore_LoadTest.properties"
-                 """
-                }
-            
-            }
-        }
+        stages {
+    stage('Performance Test') {
+      steps {
+        sh 'C:\Users\emunozpe\Desktop\apache-jmeter-5.5\bin\jmeter.bat -n -t /micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx -l /micro_holamundo/Test_Plans/data/PetStore_LoadTest.properties'
+      }
+    }
+  }
+         
 
     }
 }
