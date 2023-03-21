@@ -77,6 +77,8 @@ pipeline {
                 cd micro_holamundo/k8s
                 ls -la
                 kubectl apply -f ms-rest.yaml
+                cd..
+                cd certs
                 kubectl create secret micros-secret -n devops-tools  --key=micro_holamundo.key --cert=micro_holamundo.crt
                 """
                 }
