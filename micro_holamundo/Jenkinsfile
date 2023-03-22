@@ -129,7 +129,8 @@ pipeline {
                      cd apache-jmeter-5.5/bin/
                      pwd
                      ls -la
-                     ./jmeter.sh -n -t "micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx" -l "micro_holamundo/Test_Plans/data/PetStore_LoadTest.jtl"              
+                    // ./jmeter.sh -n -t "micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx" -l "micro_holamundo/Test_Plans/data/PetStore_LoadTest.jtl"              
+                    ./jmeter.sh -n -t ./test-web.jmx -l ./resultado.xls
                     """
                
                 }
