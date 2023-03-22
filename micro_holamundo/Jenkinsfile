@@ -129,7 +129,7 @@ pipeline {
                      cd apache-jmeter-5.5/bin/
                      pwd
                      ls -la
-                    ./jmeter.sh -n -t ./test-web.jmx -l ./resultado.xls
+                     ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.jtl
                     """
                
                 }
