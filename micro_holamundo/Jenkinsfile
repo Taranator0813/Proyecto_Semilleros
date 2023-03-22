@@ -126,8 +126,9 @@ pipeline {
                      cd ..
                      cd ..
                      ls -la
- 
-                    cd apache-jmeter-5.5/bin/jmeter.sh -n -t "micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx" -p "micro_holamundo/Test_Plans/data/PetStore_LoadTest.properties"              
+                     cd apache-jmeter-5.5/bin/
+                     pwd
+                     cd jmeter.sh -n -t "micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx" -p "micro_holamundo/Test_Plans/data/PetStore_LoadTest.properties"              
                     """
                
                 }
