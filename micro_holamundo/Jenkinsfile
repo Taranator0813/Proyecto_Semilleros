@@ -147,9 +147,11 @@ pipeline {
             steps {
                 script {
                 sh 'npm --version'
-                sh 'npm run newman-tests'
+                //sh 'npm run newman-tests'
                 echo 'Testing..'
-                sh label: 'API Collection Tests', script: 'newman run /micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json'
+                sh 'cd micro_holamundo'
+                sh 'ls -la'
+                sh label: 'API Collection Tests', script: 'newman run /JSON_Postman/SmokeTest.postman_collection.json'
                 junit 'newman.xml'
                 }
             }
