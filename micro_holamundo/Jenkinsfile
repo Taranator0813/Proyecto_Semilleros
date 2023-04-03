@@ -139,7 +139,21 @@ pipeline {
        // stage("Postman API Tests") {
         //  sh “ newman run 'test/nombre_coleccion' -e ruta_entorno;”
        // }
-     
+        
+        stage('Postman API Tests') {
+            agent {
+               label "slave"
+            } 
+            steps {
+                script {
+                sh 'npm --version'
+                sh 'npm run newman-tests'
+                echo 'Testing..'
+                sh label: 'API Collection Tests', script: 'newman run /micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json'
+                junit 'newman.xml'
+                }
+            }
+        }
 
     }
 }
