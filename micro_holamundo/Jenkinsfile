@@ -149,11 +149,11 @@ pipeline {
                       sh"""
                     cd micro_holamundo
                     npm --version
-                    cd micro_holamundo
                     ls -la
                     label: 'API Collection Tests'
                     newman run /JSON_Postman/SmokeTest.postman_collection.json
                     """
+                 
                 }
             }
         }
