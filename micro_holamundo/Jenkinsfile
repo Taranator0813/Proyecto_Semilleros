@@ -153,7 +153,18 @@ pipeline {
                     label: 'API Collection Tests'
                     newman run /JSON_Postman/SmokeTest.postman_collection.json
                     """
-                 
+                    junit "*.xml"
+                    
+             
+      publishHTML target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: '.',
+            reportFiles: 'newman_result.html',
+            reportName: 'Newman HTML Reporter'
+    ]  
+            
                 }
             }
         }
