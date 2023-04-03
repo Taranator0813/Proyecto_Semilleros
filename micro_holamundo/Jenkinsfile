@@ -145,14 +145,15 @@ pipeline {
                label "slave"
             } 
             steps {
-                script {
-                sh 'npm --version'
-                //sh 'npm run newman-tests'
-                echo 'Testing..'
-                sh 'cd micro_holamundo'
-                sh 'ls -la'
-                sh label: 'API Collection Tests', script: 'newman run /JSON_Postman/SmokeTest.postman_collection.json'
-                junit 'newman.xml'
+                script {     
+                      sh"""
+                    cd micro_holamundo
+                    npm --version
+                    cd micro_holamundo
+                    ls -la
+                    label: 'API Collection Tests'
+                    newman run /JSON_Postman/SmokeTest.postman_collection.json
+                    """
                 }
             }
         }
