@@ -147,13 +147,14 @@ pipeline {
             steps {
                 script {
                     sh"""
+                  
                     cd micro_holamundo
                     npm --version
                     ls -la
-                    
-                    def exitCode = sh script: ' newman run /JSON_Postman/SmokeTest.postman_collection.json', returnStatus: true
-                    if (exitCode != 0) {
-                        error("¡Falló la prueba de API con Newman! Código de salida: ${exitCode}")
+                    cd JSON_Postman
+                    ls -la
+                    sudo newman run SmokeTest.postman_collection.json
+              
                     """
                     
                 }
