@@ -144,7 +144,7 @@ pipeline {
             steps {
                 script {
                 
-                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
+                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/Prueba_Postman.postman_collection.json", returnStatus: true)
                 echo "status " + newmanExitCode
                 if (newmanExitCode != false) {
                     error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
