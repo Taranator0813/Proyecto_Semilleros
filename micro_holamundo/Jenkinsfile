@@ -24,17 +24,6 @@ pipeline {
             }
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
-       stage('OWAS') {
-      
-            steps {
-                script {
-                  sh """ 
-                  dependencyCheck additionalArguments: 'scan=\10.160.141.101 --format HTML', odcInstallation: '8.1.2'
-                  """
-               
-                }
-            }
-        }
         
        stage('Test SonarQube') {
            steps {
