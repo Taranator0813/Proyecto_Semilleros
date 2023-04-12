@@ -129,9 +129,10 @@ pipeline {
                      cd apache-jmeter-5.5/bin/
                      pwd
                      ls -la
-                     ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
+                    
+                     ./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -JTOTAL_THREADS=2 -JTEST_DURATION=60 -l MyRun1.jtl
                     """
-               
+                    //./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
                 }
             }
         }
@@ -141,16 +142,17 @@ pipeline {
                label "slave"
             } 
             steps {
-                sh"""
-                pwd
-                cd ..
-                cd ..
-                ls -la
-                cd apache-jmeter-5.5/bin/
-                pwd
-                ls -la
-                perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
-            """
+                //sh"""
+                //pwd
+                //cd ..
+                //cd ..
+                //ls -la
+                //cd apache-jmeter-5.5/bin/
+                //pwd
+                //ls -la
+                //perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
+                //"""
+                perfReport filterRegex: '', sourceDataFiles: '**/*.jtl'
             }
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
