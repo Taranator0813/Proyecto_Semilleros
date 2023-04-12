@@ -130,19 +130,15 @@ pipeline {
                      pwd
                      ls -la
                      ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
+                     perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
+
                     """
                
                 }
             }
         }
         
-         stage('Publish Report') {
-            steps {
-            
-                perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
-            
-            }
-         }
+      
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          
        
