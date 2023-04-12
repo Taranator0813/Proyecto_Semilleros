@@ -137,6 +137,9 @@ pipeline {
         }
         
       stage('Publish Report') {
+            agent {
+               label "slave"
+            } 
             steps {
                 pwd
                 cd ..
