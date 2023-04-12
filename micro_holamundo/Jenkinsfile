@@ -149,7 +149,7 @@ pipeline {
                 cd apache-jmeter-5.5/bin/
                 pwd
                 ls -la
-                perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
+                perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
             """
             }
         }
