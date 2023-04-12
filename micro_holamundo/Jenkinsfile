@@ -130,7 +130,7 @@ pipeline {
                      pwd
                      ls -la
                     
-                     ./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -JTOTAL_THREADS=2 -JTEST_DURATION=60 -l MyRun1.jtl
+                     ./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.jtl
                     """
                     //./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
                 }
