@@ -129,10 +129,10 @@ pipeline {
                      cd apache-jmeter-5.5/bin/
                      pwd
                      ls -la
-                    
-                     ./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
+                     ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
                     """
-                    //./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
+                     //./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
+                   
                 }
             }
         }
