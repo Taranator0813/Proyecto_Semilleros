@@ -130,7 +130,7 @@ pipeline {
                      pwd
                      ls -la
                     
-                     ./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.jtl
+                     ./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
                     """
                     //./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
                 }
@@ -152,7 +152,7 @@ pipeline {
                 //ls -la
                 //perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
                 //"""
-                perfReport filterRegex: '', sourceDataFiles: '**/*.jtl'
+                perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
             }
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
