@@ -156,6 +156,25 @@ pipeline {
 //            }
 //        }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ stage('Postman API Tests') {
+            agent {
+               label "slave"
+            } 
+            steps {
+                script {
+                
+                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/NewCollection.postman_collection.json", returnStatus: true)
+                echo "status " + newmanExitCode
+                if (newmanExitCode != false) {
+                    error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
+                }
+                else{
+                    echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
+                }
+                    
+                }
+            }
+        }
          
        
     }
