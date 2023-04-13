@@ -96,52 +96,52 @@ pipeline {
 //            }
 //        }
      
-         stage('Execute JMeter') {
-            agent {
-               label "slave"
-            } 
-            steps {
-                script {
-                    sh"""
-                     pwd
-                     cd ..
-                     cd ..
-                     ls -la
-                     cd apache-jmeter-5.5/bin/
-                    ./jmeter --version
-                    """
+//         stage('Execute JMeter') {
+//            agent {
+//               label "slave"
+//            } 
+//            steps {
+//                script {
+//                    sh"""
+//                     pwd
+//                     cd ..
+//                     cd ..
+//                     ls -la
+//                     cd apache-jmeter-5.5/bin/
+//                    ./jmeter --version
+//                    """
                
-                }
-            }
-        }
+//                }
+//            }
+//        }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        stage('JMeter') {
-            agent {
-               label "slave"
-            } 
-            steps {
-                script {
-                    sh"""
-                     pwd
-                     cd ..
-                     cd ..
-                     ls -la
-                     cd apache-jmeter-5.5/bin/
-                     pwd
-                     ls -la
-                     ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
-                    """
+//        stage('JMeter') {
+//            agent {
+//               label "slave"
+//            } 
+//            steps {
+//                script {
+//                    sh"""
+//                    pwd
+//                    cd ..
+//                    cd ..
+//                    ls -la
+//                    cd apache-jmeter-5.5/bin/
+//                    pwd
+//                    ls -la
+//                    ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
+//                   """
                      //./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
                    
-                }
-            }
-        }
+//                }
+//            }
+//        }
         
-      stage('Publish Report') {
-            agent {
-               label "slave"
-            } 
-            steps {
+//      stage('Publish Report') {
+//            agent {
+//               label "slave"
+//            } 
+//            steps {
                 //sh"""
                 //pwd
                 //cd ..
@@ -152,9 +152,9 @@ pipeline {
                 //ls -la
                 //perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
                 //"""
-                perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
-            }
-        }
+//                perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
+//            }
+//        }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          
        
