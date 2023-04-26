@@ -189,17 +189,7 @@ pipeline {
                 echo "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
 
                 
-stage('Rollback') {
-    steps {
-        script {
-            sh"""
-            sudo docker pull estefaniam/micro_holamundo:build-${BUILD_NUMBER}
-            sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:latest
-            """
-            echo "---------------------Rollback successful---------------------"
-        }
-    }
-}
+
                 
                          
             } else {
@@ -212,7 +202,17 @@ stage('Rollback') {
     }
 }
 
-
+stage('Rollback') {
+    steps {
+        script {
+            sh"""
+            sudo docker pull estefaniam/micro_holamundo:build-${BUILD_NUMBER}
+            sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:latest
+            """
+            echo "---------------------Rollback successful---------------------"
+        }
+    }
+}
 
 
 
