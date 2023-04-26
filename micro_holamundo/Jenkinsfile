@@ -182,7 +182,7 @@ pipeline {
 stage('Ejemplo') {
   steps {
     // pasos del stage
-  }
+
   post{
             always{
                 script{
@@ -200,7 +200,8 @@ stage('Ejemplo') {
                 }
             }
         }
-}       
+}
+}  
         
         
       
