@@ -57,8 +57,8 @@ pipeline {
                     sudo docker version
                     java --version
                     sudo docker login -u estefaniam -p dckr_pat_Mcue9uG-rCjdzWfAD9WfcQJu3Sw
-                    sudo docker build -t estefaniam/micro_holamundo:2.0 .
-                    sudo docker push estefaniam/micro_holamundo:2.0
+                    sudo docker build -t estefaniam/micro_holamundo:build-${BUILD_NUMBER} .
+                    sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}
                     """
                     echo '---------------------image succesfull in dockerHub----------------------------'
                 }
