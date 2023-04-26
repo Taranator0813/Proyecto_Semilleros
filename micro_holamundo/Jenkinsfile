@@ -162,7 +162,7 @@ pipeline {
             steps {
                 script {
                 
-                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/NewCollection.postman_collection.json", returnStatus: true)
+                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
                 echo "status " + newmanExitCode
                 if (newmanExitCode != 0) {
                      sh "sudo docker rmi -f estefaniam/micro_holamundo:build-${BUILD_NUMBER}-new"
