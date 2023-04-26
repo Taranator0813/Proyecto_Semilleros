@@ -58,7 +58,7 @@ pipeline {
                     java --version
                     sudo docker login -u estefaniam -p dckr_pat_Mcue9uG-rCjdzWfAD9WfcQJu3Sw
                     sudo docker build -t estefaniam/micro_holamundo:build-${BUILD_NUMBER} .
-                    sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}-new
+                    sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}
                     """
                     echo '---------------------image succesfull in dockerHub----------------------------'
                 }
@@ -165,7 +165,7 @@ pipeline {
                 def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
                 echo "status " + newmanExitCode
                 if (newmanExitCode != 0) {
-                     sh "sudo docker rmi -f estefaniam/micro_holamundo:build-${BUILD_NUMBER}-new"
+                     sh "sudo docker rmi -f estefaniam/micro_holamundo:build-${BUILD_NUMBER}"
                      sh "sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
                      sh "sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
                     error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
