@@ -189,6 +189,20 @@ pipeline {
                 echo "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
                 
                 
+
+
+                                        
+            } else {
+                echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
+                stage('JMeter') {
+                    // Agregar aquí los pasos para JMeter
+                }
+            }
+        }
+    }
+}
+
+
      stage('Rollback') {
             agent {
                label "slave"
@@ -203,20 +217,6 @@ pipeline {
                 }
             }
         }
-
-                                        
-            } else {
-                echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
-                stage('JMeter') {
-                    // Agregar aquí los pasos para JMeter
-                }
-            }
-        }
-    }
-}
-
-
-
 
 
 
