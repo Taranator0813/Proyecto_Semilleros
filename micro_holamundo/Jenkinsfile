@@ -179,28 +179,26 @@ pipeline {
 //            }
 //        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        
-        
-        
-        
-                post {
-    always {
-        script {
-            def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
-            echo "status " + newmanExitCode
-            if (newmanExitCode != 0) {
-                error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
-            } else {
-                echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
-                stage('jmeter') {
-                    // Agregar aquí los pasos para JMeter
+        post{
+            always{
+                script{
+                    
+                    def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
+                    echo "status " + newmanExitCode
+                     if (newmanExitCode != 0) {
+                         
+                         error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
+                     }else{
+                          echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
+                
+                     
+                     }
                 }
             }
         }
-    }
-        }
-
+        
+        
+       
         
         
         
