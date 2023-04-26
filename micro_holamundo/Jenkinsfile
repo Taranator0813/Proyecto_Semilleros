@@ -194,8 +194,6 @@ pipeline {
             }
         }
     }
-        }
-    }
 
 stage('rollback') {
     steps {
