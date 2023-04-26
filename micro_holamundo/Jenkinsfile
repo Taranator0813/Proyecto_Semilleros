@@ -196,6 +196,7 @@ pipeline {
                 echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
                 stage('JMeter') {
                     // Agregar aquí los pasos para JMeter
+                    echo "pasaste"
                 }
             }
         }
