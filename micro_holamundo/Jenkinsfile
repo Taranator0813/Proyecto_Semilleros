@@ -187,24 +187,24 @@ pipeline {
             echo "status " + newmanExitCode
             if (newmanExitCode != 0) {
                 echo "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
-
- stage('Rollback') {
-      agent {
+                
+                
+     stage('Rollback') {
+            agent {
                label "slave"
             } 
             steps {
                 script {
                     sh"""
-                  sudo docker pull estefaniam/micro_holamundo:build-${BUILD_NUMBER}
-                  sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:latest
+                   sudo docker pull estefaniam/micro_holamundo:build-${BUILD_NUMBER}
+                   sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:latest
                     """
                     echo '---------------------image succesfull in dockerHub----------------------------'
                 }
             }
-}
+        }
 
-                
-                         
+                                        
             } else {
                 echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
                 stage('JMeter') {
