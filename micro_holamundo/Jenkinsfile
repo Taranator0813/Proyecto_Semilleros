@@ -179,32 +179,7 @@ pipeline {
 //            }
 //        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        post {
-    always {
-        script {
-            def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
-            echo "status " + newmanExitCode
-            if (newmanExitCode != 0) {
-                error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
-            } else {
-                echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
-                stage('jmeter') {
-                    // Agregar aquí los pasos para JMeter
-                }
-            }
-        }
-    }
-        }
-stage('rollback') {
-    steps {
-        script {
-            sh"""
-            sudo docker pull estefaniam/micro_holamundo:build-${BUILD_NUMBER}
-            sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:latest
-            """
-            echo "---------------------Rollback successful---------------------"
-        }
-    }
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+}
