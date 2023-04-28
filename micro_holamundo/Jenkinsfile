@@ -187,7 +187,7 @@ stage('Postman API Tests') {
             steps {
                 script {
                 
-                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
+                def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/NewCollection.postman_collection.json", returnStatus: true)
                 echo "status " + newmanExitCode
                 if (newmanExitCode != 0) {
                 sh "sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
@@ -207,7 +207,21 @@ stage('Postman API Tests') {
 
 
 
-
+  stage('Build') {
+            steps {
+                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Taranator0813/Proyecto_Semilleros.git']])
+                script{
+                 sh """
+                    ls -la
+                    cd micro_holamundo
+                    ls -la
+                    pwd
+                    gradle init
+                    gradle build
+                    """
+                }
+            }
+        }
      
         
       
