@@ -210,7 +210,7 @@ stage('Postman API Tests') {
             } 
             steps {
                 script {
-                    sh"jmeter -n -t micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx -l micro_holamundo/Test_Plans/resultado.xml"
+                    sh"jmeter -Jjmeter.save.saveservice.output_format=xml -n -t micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx  -l micro_holamundo/Test_Plans/resultado.xml"
                      //./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
                    
                 }
