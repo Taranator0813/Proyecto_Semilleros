@@ -193,7 +193,7 @@ stage('Postman API Tests') {
                 sh "sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
                 sh "sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"             
              
-                    error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
+                error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
 
                 }
                 else{
