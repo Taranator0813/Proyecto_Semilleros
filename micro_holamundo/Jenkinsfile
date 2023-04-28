@@ -197,7 +197,7 @@ pipeline {
                 else{
                     echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
                 
-                     stage('Build') {
+                  
             steps {
                 script{
                  sh """
@@ -207,7 +207,7 @@ pipeline {
                     """
                 }
             }
-        }
+        
                     
                     
                 }
