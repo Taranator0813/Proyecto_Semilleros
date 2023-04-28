@@ -192,8 +192,7 @@ stage('Postman API Tests') {
                 if (newmanExitCode != 0) {
                  
                     sh """ 
-                    sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback
-                    sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback
+                    
                     
                     az login --service-principal --username 2d721c5d-feae-41c7-a45a-ac923780104a --password yga8Q~gCRhayv9xO0f55Pb996MbCIReGZWQJ9dsX --tenant c5ad2df2-752b-4501-9b44-db6c637f5221
                     az account set --subscription af4e92ac-7566-4412-8a79-e11fc3a89f24
