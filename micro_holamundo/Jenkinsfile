@@ -207,21 +207,9 @@ stage('Postman API Tests') {
 
 
 
-  stage('Build') {
-            steps {
-                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Taranator0813/Proyecto_Semilleros.git']])
-                script{
-                 sh """
-                    ls -la
-                    cd micro_holamundo
-                    ls -la
-                    pwd
-                    gradle init
-                    gradle build
-                    """
-                }
-            }
-        }
+
+        
+        
      
         
       
