@@ -52,13 +52,15 @@ pipeline {
             } 
             steps {
                 script {
+                    def dockerImage = "estefaniam/micro_holamundo:build-${BUILD_NUMBER}"
                     sh"""
                     cd micro_holamundo
                     sudo docker version
                     java --version
+                    
                     sudo docker login -u estefaniam -p dckr_pat_Mcue9uG-rCjdzWfAD9WfcQJu3Sw
-                    sudo docker build -t estefaniam/micro_holamundo:build-${BUILD_NUMBER} .
-                    sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}
+                    sudo docker build -t ${dockerImage} .
+                    sudo docker push ${dockerImage}
                     """
                     echo '---------------------image succesfull in dockerHub----------------------------'
                 }
