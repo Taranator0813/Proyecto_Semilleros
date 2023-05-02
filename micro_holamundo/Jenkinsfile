@@ -215,7 +215,7 @@ stage('Postman API Tests') {
                      cd ..
                      cd ..
                      ls -la
-                     cd apache-jmeter-5.5/bin/
+                     cd apache-jmeter-5.3/bin/
                     ./jmeter --version
                     """
                
