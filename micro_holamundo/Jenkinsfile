@@ -76,8 +76,7 @@ pipeline {
                 az account set --subscription af4e92ac-7566-4412-8a79-e11fc3a89f24
                 az aks get-credentials --resource-group Proyecto_DevOps --name stack_Banc_Pop2504-k8s
                 cd micro_holamundo/k8s
-                ls -la
-                sed -i 's|${dockerImage}|estefaniam/micro_holamundo:build-${buildNumber}|g' ms-rest.yaml
+                ls -la 
                 kubectl apply -f ms-rest.yaml
                 """
                 }
