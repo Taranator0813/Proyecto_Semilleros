@@ -204,15 +204,21 @@ stage('Postman API Tests') {
             }
         }  
 
- stage('JMeter') {
+         stage('Execute JMeter') {
             agent {
                label "slave"
             } 
             steps {
                 script {
-                    sh"jmeter -Jjmeter.save.saveservice.output_format=xml -n -t micro_holamundo/Test_Plans/PetStore-End-to-End-Flow.jmx  -l micro_holamundo/Test_Plans/resultado.xml"
-                     //./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
-                   
+                    sh"""
+                     pwd
+                     cd ..
+                     cd ..
+                     ls -la
+                     cd apache-jmeter-5.5/bin/
+                    ./jmeter --version
+                    """
+               
                 }
             }
         }
