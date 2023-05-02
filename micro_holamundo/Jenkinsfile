@@ -190,10 +190,10 @@ stage('Postman API Tests') {
                 def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/NewCollection.postman_collection.json", returnStatus: true)
                 echo "status " + newmanExitCode
                 if (newmanExitCode != 0) {
-                    node ('docker'){
+               
                          sh "sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
                          sh "sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"             
-                    }
+             
                
                 error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
 
