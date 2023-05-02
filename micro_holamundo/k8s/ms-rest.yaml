@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: rest
-          image: estefaniam/micro_holamundo:3.0
+          image: ${dockerImage}
          
           imagePullPolicy: IfNotPresent
           ports:
