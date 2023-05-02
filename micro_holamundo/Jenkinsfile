@@ -199,7 +199,13 @@ stage('Postman API Tests') {
                 else{
                     echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
                 }
-                     catch (Exception e) {
+            
+                    
+                }
+                
+                
+                
+                         catch (Exception e) {
         echo "Ocurrió una excepción: " + e.getMessage()
         echo "Realizando rollback..."
          sh """
@@ -212,8 +218,8 @@ stage('Postman API Tests') {
                 """
         error "Falló la ejecución de la prueba. Se realizó un rollback a la versión anterior de la imagen."
       }
-                    
-                }
+                
+                
             }
         }  
 
