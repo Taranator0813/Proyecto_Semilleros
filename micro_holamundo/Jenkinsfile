@@ -192,8 +192,17 @@ stage('Postman API Tests') {
                 def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
                 echo "status " + newmanExitCode
                 if (newmanExitCode != 0) {
-                    node('Azure'){
-                              sh """
+
+                error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
+
+                }
+                else{
+                    echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
+                }
+                     catch (Exception e) {
+        echo "Ocurrió una excepción: " + e.getMessage()
+        echo "Realizando rollback..."
+         sh """
                 az login --service-principal --username 2d721c5d-feae-41c7-a45a-ac923780104a --password yga8Q~gCRhayv9xO0f55Pb996MbCIReGZWQJ9dsX --tenant c5ad2df2-752b-4501-9b44-db6c637f5221
                 az account set --subscription af4e92ac-7566-4412-8a79-e11fc3a89f24
                 az aks get-credentials --resource-group Proyecto_DevOps --name stack_Banc_Pop2504-k8s
@@ -201,18 +210,8 @@ stage('Postman API Tests') {
                 ls -la 
                 kubectl set image deployment/ms-rest ms-rest=estefaniam/micro_holamundo:build-${BUILD_NUMBER-1}
                 """
-                    }
-              
-
-                    
-             
-               
-                error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
-
-                }
-                else{
-                    echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
-                }
+        error "Falló la ejecución de la prueba. Se realizó un rollback a la versión anterior de la imagen."
+      }
                     
                 }
             }
