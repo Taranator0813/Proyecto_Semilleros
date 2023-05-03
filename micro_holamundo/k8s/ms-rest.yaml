@@ -23,7 +23,7 @@ spec:
       containers:
         - name: rest
         
-          image: estefaniam/micro_holamundo:build-$BUILD_NUMBER
+          image: estefaniam/micro_holamundo:build-$VERSION
          
           imagePullPolicy: IfNotPresent
           ports:
