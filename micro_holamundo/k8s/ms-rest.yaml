@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
         - name: rest
-          image: ${dockerImage}
+        
+          image: estefaniam/micro_holamundo:build-${BUILD_NUMBER}
          
           imagePullPolicy: IfNotPresent
           ports:
