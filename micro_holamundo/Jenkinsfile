@@ -201,7 +201,6 @@ stage('Pruebas de API con Newman') {
 
         if (newmanExitCode != 0) {
           env.STATUS = 1
-          echo "hola" +  env.STATUS
           echo "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
         }
         else {
