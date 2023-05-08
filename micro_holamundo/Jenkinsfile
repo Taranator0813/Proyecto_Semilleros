@@ -138,6 +138,7 @@ pipeline {
 //                    pwd
 //                    ls -la
 //                    ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
+               
 //                   """
                      //./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
                    
@@ -251,13 +252,39 @@ stage('Rollback') {
                      cd ..
                      cd ..
                      ls -la
-                     cd apache-jmeter-5.3/bin/
+                     cd apache-jmeter-5.5/bin/
                     ./jmeter --version
                     """
                
                 }
             }
-        }      
+        } 
+        
+        
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          
+        stage('JMeter') {
+            agent {
+               label "slave"
+            } 
+            steps {
+                script {
+                    sh"""
+                    pwd
+                    cd ..
+                    cd ..
+                    ls -la
+                    cd apache-jmeter-5.5/bin/
+                    pwd
+                    ls -la
+                    ./jmeter.sh -n -t ./ejemplo.jmx -l ./resultado.xml
+                   """
+                    
+                   
+                }
+            }
+        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
