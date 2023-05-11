@@ -93,101 +93,6 @@ pipeline {
         
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//         stage('Execute JMeter') {
-//            steps {
-//                 script{
-//                sh """
-//                 c:\\Users\\emunozpe\\Desktop\\apache-jmeter-5.5\\bin\\jmeter.bat -n -t "micro_holamundo\\Test_Plans\\PetStore-End-to-End-Flow.jmx" -p "micro_holamundo\\Test_Plans\\data\\PetStore_LoadTest.properties"
-//                 """
-//                }
-//            
-//            }
-//        }
-     
-//         stage('Execute JMeter') {
-//            agent {
-//               label "slave"
-//            } 
-//            steps {
-//                script {
-//                    sh"""
-//                     pwd
-//                     cd ..
-//                     cd ..
-//                     ls -la
-//                     cd apache-jmeter-5.5/bin/
-//                    ./jmeter --version
-//                    """
-               
-//                }
-//            }
-//        }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        stage('JMeter') {
-//            agent {
-//               label "slave"
-//            } 
-//            steps {
-//                script {
-//                    sh"""
-//                    pwd
-//                    cd ..
-//                    cd ..
-//                    ls -la
-//                    cd apache-jmeter-5.5/bin/
-//                    pwd
-//                    ls -la
-//                    ./jmeter.sh -n -t ./pruebaJenkins.jmx -l ./resultado.xml
-               
-//                   """
-                     //./jmeter.sh -n -t ./PetStore-End-to-End-Flow.jmx -p ./PetStore_LoadTest.properties -l MyRun1.xml
-                   
-//                }
-//            }
-//        }
-        
-//      stage('Publish Report') {
-//            agent {
-//               label "slave"
-//            } 
-//            steps {
-                //sh"""
-                //pwd
-                //cd ..
-                //cd ..
-                //ls -la
-                //cd apache-jmeter-5.5/bin/
-                //pwd
-                //ls -la
-                //perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
-                //"""
-//                perfReport filterRegex: '', sourceDataFiles: '**/*.xml'
-//            }
-//        }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// stage('Postman API Tests') {
-//            agent {
-//               label "slave"
-//            } 
-//            steps {
-//                script {
-//                
-//                def newmanExitCode = sh(script: "newman run JSON_Postman/SmokeTest.postman_collection.json", returnStatus: true)
-//                echo "status " + newmanExitCode
-//                if (newmanExitCode != 0) {
-//                  sh "sudo docker tag estefaniam/micro_holamundo:build-${BUILD_NUMBER} estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
-//                  sh "sudo docker push estefaniam/micro_holamundo:build-${BUILD_NUMBER}-rollback"
-//             
-//                    error "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
-//
-//                }
-//                else{
-//                    echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
-//                }
-//                    
-//                }
-//            }
-//        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 stage('Pruebas de API con Newman') {
@@ -253,7 +158,7 @@ stage('Rollback') {
                      cd ..
                      ls -la
                      cd apache-jmeter-5.5/bin/
-                    ./jmeter --version
+                    sudo ./jmeter --version
                     """
                
                 }
@@ -264,27 +169,50 @@ stage('Rollback') {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           
-        stage('JMeter') {
-            agent {
-               label "slave"
-            } 
-            steps {
-                script {
-                    sh"""
-                    pwd
-                    cd ..
-                    cd ..
-                    ls -la
-                    cd apache-jmeter-5.5/bin/
-                    pwd
-                    ls -la
-                    ./jmeter.sh -n -t ./ejemplo.jmx -l ./resultado.xml
-                   """
-                    
-                   
-                }
-            }
+stage('JMeter') {
+    agent {
+        label "slave"
+    } 
+    steps {
+        script {
+            sh"""
+            pwd
+            cd ..
+            cd ..
+            ls -la
+            cd apache-jmeter-5.5/bin/
+            pwd
+            ls -la
+            sudo ./jmeter.sh -n -t ./ejemplo.jmx -l ./resultado.xml
+            """
         }
+    }
+ //   post {
+//        always {
+//             perfReport filterRegex: '', sourceDataFiles: 'resultado.xml'
+//        }
+//   }
+}
+
+
+          
+stage('performance') {
+    agent {
+        label "slave"
+    } 
+    steps {
+        
+            perfReport filterRegex: '', sourceDataFiles: '/home/EstefaniaM/apache-jmeter-5.5/bin/resultado0805.xml'
+         
+        
+    }
+}
+        
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
