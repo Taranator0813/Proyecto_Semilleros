@@ -16,21 +16,26 @@ pipeline {
                 timeout(time: 15, unit: "MINUTES") {
                     input message: 'Do you want to approve the deployment?', ok: 'Yes'
                 }
-                echo "Deployment approved."
+            stage('Aprobación') {
+            steps {
+                timeout(time: 15, unit: "MINUTES") {
+                    input message: '¿Deseas aprobar la implementación?', ok: 'Sí'
+                }
+                echo "Implementación aprobada."
                 script {
                     def buildUrl = env.BUILD_URL
                     def jobName = env.JOB_NAME
                     def buildNumber = env.BUILD_NUMBER
                     def approver = env.USER
-                    def emailSubject = "Approval Required [Jenkins] ${jobName} #${buildNumber}"
+                    def emailSubject = "Aprobación requerida [Jenkins] ${jobName} #${buildNumber}"
                     def emailBody = """
-                        <p>Deployment for job <strong>${jobName}</strong> #${buildNumber} has been approved.</p>
-                        <p>Approver: ${approver}</p>
-                        <p>Click <a href="${buildUrl}input">here</a> to proceed with the deployment.</p>
+                        <p>La implementación del trabajo <strong>${jobName}</strong> #${buildNumber} ha sido aprobada.</p>
+                        <p>Aprobador: ${approver}</p>
+                        <p>Haz clic <a href="${buildUrl}input">aquí</a> para proceder con la implementación.</p>
                     """
                     emailext mimeType: 'text/html',
                         subject: emailSubject,
-                        to: "munoze297@gmail.com",
+                        to: "munoze297@gmail.com", // dirección de correo electrónico de destino 
                         body: emailBody
                 }
             }
