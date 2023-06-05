@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo "Performing build"
+            }
+        }
+        stage('Package') {
+            steps {
+                echo "Performing Artifact package"
+            }
+        }
+        stage('Approval') {
+            steps {
+                script {
+                    def buildUrl = env.BUILD_URL
+                    def jobName = env.JOB_NAME
+                    def buildNumber = env.BUILD_NUMBER
+                    def emailSubject = "Approval Required [Jenkins] ${jobName} #${buildNumber}"
+                    def emailBody = """
+                        <p>Deployment for job <strong>${jobName}</strong> #${buildNumber} requires approval.</p>
+                        <p>Please choose one of the following options:</p>
+                        <ul>
+                            <li><a href="${buildUrl}input?approve=true">Approve</a></li>
+                            <li><a href="${buildUrl}input?approve=false">Reject</a></li>
+                        </ul>
+                    """
+                    emailext mimeType: 'text/html',
+                        subject: emailSubject,
+                        to: "munoze297@gmail.com", // Agrega la dirección de correo electrónico del aprobador aquí
+                        body: emailBody
+                }
+            }
+        }
+        stage('Verify Approval') {
+            steps {
+                script {
+                    def userInput = input(
+                        id: 'userInput',
+                        message: 'Waiting for approval',
+                        parameters: [
+                            [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Approval status', name: 'approve']
+                        ]
+                    )
+                    if (userInput) {
+                        echo "Deployment approved."
+                    } else {
+                        error("Deployment rejected.")
+                    }
+                }
+            }
+        }
+        stage('Deployment') {
+            steps {
+                echo "Perform deployment"
+            }
+        }
+    }
+}
