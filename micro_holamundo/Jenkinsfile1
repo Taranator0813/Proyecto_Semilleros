@@ -23,7 +23,7 @@ pipeline {
                     def buildUrl = env.BUILD_URL
                     def jobName = env.JOB_NAME
                     def buildNumber = env.BUILD_NUMBER
-                    def approver = env.USER
+                    def approver = env.USERNAME
                     def emailSubject = "Aprobación requerida [Jenkins] ${jobName} #${buildNumber}"
                     def emailBody = """
                         <p>La implementación del trabajo <strong>${jobName}</strong> #${buildNumber} ha sido aprobada.</p>
