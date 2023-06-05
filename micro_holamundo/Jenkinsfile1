@@ -1,1 +1,45 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo "Performing build"
+            }
+        }
+        stage('Package') {
+            steps {
+                echo "Performing Artifact package"
+            }
+        }
+        stage('Approval') {
+            steps {
+                timeout(time: 15, unit: "MINUTES") {
+                    input message: 'Do you want to approve the deployment?', ok: 'Yes'
+                }
+                echo "Deployment approved."
+                script {
+                    def buildUrl = env.BUILD_URL
+                    def jobName = env.JOB_NAME
+                    def buildNumber = env.BUILD_NUMBER
+                    def approver = env.USER
+                    def emailSubject = "Approval Required [Jenkins] ${jobName} #${buildNumber}"
+                    def emailBody = """
+                        <p>Deployment for job <strong>${jobName}</strong> #${buildNumber} has been approved.</p>
+                        <p>Approver: ${approver}</p>
+                        <p>Click <a href="${buildUrl}input">here</a> to proceed with the deployment.</p>
+                    """
+                    emailext mimeType: 'text/html',
+                        subject: emailSubject,
+                        to: "munoze297@gmail.com",
+                        body: emailBody
+                }
+            }
+        }
+        stage('Deployment') {
+            steps {
+                echo "Perform deployment"
+            }
+        }
+    }
+}
 
