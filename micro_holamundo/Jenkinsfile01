@@ -87,10 +87,9 @@ stage('Rollback') {
                 script {
                     sh"""
                      pwd
-                     cd ..
-                     cd ..
+                     cd 
                      ls -la
-                     cd apache-jmeter-5.5/bin/
+                     cd /home/apache-jmeter-5.5/bin
                     sudo ./jmeter --version
                     """
                
