@@ -1,0 +1,111 @@
+pipeline {
+    agent any
+    
+    tools {
+        gradle 'Gradle 7.5.1' 
+        //dockerTool 'Docker 20.10.21' 
+     }
+   
+    stages {
+       
+        stage('Build') {
+            steps {
+                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Taranator0813/Proyecto_Semilleros.git']])
+                script{
+                 sh """
+                    ls -la
+                    cd micro_holamundo
+                    ls -la
+                    pwd
+                    gradle init
+                    gradle build
+                    """
+                }
+            }
+        }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+stage('Pruebas de API con Newman') {
+  agent {
+    label "slave"
+  } 
+  steps {
+    script {
+     
+        def newmanExitCode = sh(script: "newman run micro_holamundo/JSON_Postman/NewCollection.postman_collection.json", returnStatus: true)
+        echo "status " + newmanExitCode
+
+        if (newmanExitCode != 0) {
+          env.STATUS = 1
+          echo "¡Falló la prueba de API con Newman! Código de salida " + newmanExitCode
+        }
+        else {
+          env.STATUS = 0
+          echo "¡Prueba de API con Newman exitosa! Código de salida " + newmanExitCode
+        }
+      
+    }
+  }
+}
+
+stage('Rollback') {
+  when {
+     expression { env.STATUS == "1" }
+  }
+  steps {
+    script {
+      echo "Realizando rollback..."
+      
+      sh """
+        az login --service-principal --username 2d721c5d-feae-41c7-a45a-ac923780104a --password yga8Q~gCRhayv9xO0f55Pb996MbCIReGZWQJ9dsX --tenant c5ad2df2-752b-4501-9b44-db6c637f5221
+        az account set --subscription af4e92ac-7566-4412-8a79-e11fc3a89f24
+        az aks get-credentials --resource-group Proyecto_DevOps --name stack_Banc_Pop2504-k8s
+        cd micro_holamundo/k8s
+        ls -la 
+        kubectl rollout undo deployment.v1.apps/rest -n ms
+        
+
+        kubectl describe deployment rest -n ms
+        
+        """
+    
+        echo "Falló la ejecución de la prueba. Se realizó un rollback a la versión anterior de la imagen."
+    }
+  }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         stage('Execute JMeter') {
+            agent {
+               label "slave"
+            } 
+            steps {
+                script {
+                    sh"""
+                     pwd
+                     cd ..
+                     cd ..
+                     ls -la
+                     cd apache-jmeter-5.5/bin/
+                    sudo ./jmeter --version
+                    """
+               
+                }
+            }
+        } 
+        
+        
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+}
