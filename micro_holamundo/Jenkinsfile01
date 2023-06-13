@@ -101,7 +101,7 @@ pipeline {
                     //sh "${env.JMETER_HOME}/bin/jmeter --nongui --plugin-type AggregateReport --generate-csv /home/nuevo-directorio/micro_holamundo/JMETER/resultados.csv --input-jtl /home/nuevo-directorio/micro_holamundo/JMETER/resultadosss.jtl --plugin-type AggregateReport --report-output /home/nuevo-directorio/micro_holamundo/JMETER/reporte"
                     sh "${env.JMETER_HOME}/bin/jmeter -n -t /home/nuevo-directorio/micro_holamundo/JMETER/ejemplob.jmx -l /home/nuevo-directorio/micro_holamundo/JMETER/resultado0906.xml "
                     sh "${env.JMETER_HOME}/bin/jmeter -g /home/nuevo-directorio/micro_holamundo/JMETER/resultado0906.xml -o /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
-        		    sh "zip -r informacion-${BUILD_NUMBER}.zip /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
+        		    sh "zip -r /home/nuevo-directorio/micro_holamundo/JMETER/informacion-${BUILD_NUMBER}.zip /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
                  }
             }
         }
@@ -118,7 +118,7 @@ pipeline {
               
                emailext body: 'Adjunto el archivo HTML generado por las pruebas JMeter.',
                           subject: 'Resultado de las pruebas JMeter',
-                          attachmentsPattern: 'informacion-${BUILD_NUMBER}.zip',
+                          attachmentsPattern: '/home/nuevo-directorio/micro_holamundo/JMETER/informacion-${BUILD_NUMBER}.zip',
                           to: 'emunozpe@emeal.nttdata.com'
             
             }
