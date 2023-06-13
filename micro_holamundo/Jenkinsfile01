@@ -84,10 +84,8 @@ pipeline {
             
             }
         }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      
-     
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         stage('Git Clone') {
             agent {
                 label "slave"
@@ -101,11 +99,14 @@ pipeline {
                     //sh "${env.JMETER_HOME}/bin/jmeter --nongui --plugin-type AggregateReport --generate-csv /home/nuevo-directorio/micro_holamundo/JMETER/resultados.csv --input-jtl /home/nuevo-directorio/micro_holamundo/JMETER/resultadosss.jtl --plugin-type AggregateReport --report-output /home/nuevo-directorio/micro_holamundo/JMETER/reporte"
                     sh "${env.JMETER_HOME}/bin/jmeter -n -t /home/nuevo-directorio/micro_holamundo/JMETER/ejemplob.jmx -l /home/nuevo-directorio/micro_holamundo/JMETER/resultado0906.xml "
                     sh "${env.JMETER_HOME}/bin/jmeter -g /home/nuevo-directorio/micro_holamundo/JMETER/resultado0906.xml -o /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
-        		    sh "zip -r /home/nuevo-directorio/micro_holamundo/JMETER/informacion-${BUILD_NUMBER}.zip /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
+        		    sh "zip -r informacion-${BUILD_NUMBER}.zip /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
+                    //sh "tar -czf informacion-${BUILD_NUMBER}.tar.gz /home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML"
+
                  }
             }
         }
         
+  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      
         stage('Enviar por correo') {
@@ -118,8 +119,8 @@ pipeline {
               
                emailext body: 'Adjunto el archivo HTML generado por las pruebas JMeter.',
                           subject: 'Resultado de las pruebas JMeter',
-                          attachmentsPattern: '/home/nuevo-directorio/micro_holamundo/JMETER/informacion-${BUILD_NUMBER}.zip',
-                          to: 'emunozpe@emeal.nttdata.com'
+                          attachmentsPattern: 'informacion-${BUILD_NUMBER}.zip',
+                          to: 'munoze297@gmail.com'
             
             }
           }
