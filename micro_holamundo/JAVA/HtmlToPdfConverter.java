@@ -9,17 +9,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class HtmlToPdfConverter {
 
     public static void main(String[] args) {
+     
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(true);
         options.addArguments("--disable-gpu");
 
+  
         String htmlFilePath = "/home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML/index.html";
 
+      
         String pdfOutputPath = "/home/EstefaniaM/workspace/Rollback/archivo_selenium.pdf";
 
         WebDriver driver = new ChromeDriver(options);
 
         try {
+         
             driver.get("file://" + htmlFilePath);
 
             WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -30,12 +34,29 @@ public class HtmlToPdfConverter {
                                  "    tabs[i].click(); " +
                                  "}");
 
+            driver.get("chrome://print");
+            WebElement printPreviewButton = driver.findElement(By.cssSelector(".action-button"));
+            printPreviewButton.click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".preview-container")));
+
+            driver.switchTo().frame(driver.findElement(By.cssSelector("iframe")));
+            WebElement printButton = driver.findElement(By.cssSelector(".action-button"));
+            printButton.click();
+            wait.until(ExpectedConditions.urlContains("pdf"));
+
            
-            driver.save_screenshot("/home/EstefaniaM/workspace/Rollback/captura_de_pantalla.png"); 
-            driver.save_pdf(pdfOutputPath);
+            driver.switchTo().defaultContent();
+            driver.get("chrome://downloads");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("downloads-item")));
+
+            driver.executeScript("downloadsManager.setSavePath('" + pdfOutputPath + "');");
+            WebElement saveButton = driver.findElement(By.cssSelector("#save"));
+            saveButton.click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("downloads-item")));
         } finally {
-           
+        
             driver.quit();
         }
     }
 }
+
