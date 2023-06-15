@@ -17,7 +17,7 @@ public class HtmlToPdfConverter {
 
         String htmlFilePath = "/home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML/index.html";
 
-        String pdfOutputPath = "/home/EstefaniaM/workspace/Rollback/archivo_selenium.pdf";
+        String pdfOutputPath = "/home/EstefaniaM/workspace/test/archivo_selenium.pdf";
 
         WebDriver driver = new ChromeDriver(options);
 
