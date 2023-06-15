@@ -26,10 +26,10 @@ public class HtmlToPdfConverter {
             driver.get("file://" + htmlFilePath);
 
             WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn.btn-link.btn-xs.dropdown-toggle")));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn.btn-link.btn-xs.dropdown-toggle[data-toggle='collapse'][href='#bodySyntheticResponseTimeDistribution']")));
 
             JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-            jsExecutor.executeScript("var buttons = document.querySelectorAll('.btn.btn-link.btn-xs.dropdown-toggle'); " +
+            jsExecutor.executeScript("var buttons = document.querySelectorAll('.btn.btn-link.btn-xs.dropdown-toggle[data-toggle=\"collapse\"][href=\"#bodySyntheticResponseTimeDistribution\"]'); " +
                                      "for (var i = 0; i < buttons.length; i++) { " +
                                      "    buttons[i].click(); " +
                                      "}");
@@ -58,3 +58,4 @@ public class HtmlToPdfConverter {
         }
     }
 }
+
