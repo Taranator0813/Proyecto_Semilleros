@@ -26,12 +26,12 @@ public class HtmlToPdfConverter {
             driver.get("file://" + htmlFilePath);
 
             WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".tab")));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn.btn-link.btn-xs.dropdown-toggle")));
 
             JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-            jsExecutor.executeScript("var tabs = document.querySelectorAll('.tab'); " +
-                                     "for (var i = 0; i < tabs.length; i++) { " +
-                                     "    tabs[i].click(); " +
+            jsExecutor.executeScript("var buttons = document.querySelectorAll('.btn.btn-link.btn-xs.dropdown-toggle'); " +
+                                     "for (var i = 0; i < buttons.length; i++) { " +
+                                     "    buttons[i].click(); " +
                                      "}");
 
             driver.get("chrome://print");
