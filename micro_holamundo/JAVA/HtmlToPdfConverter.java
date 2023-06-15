@@ -28,14 +28,21 @@ public class HtmlToPdfConverter {
             By buttonSelector = By.cssSelector(".btn.btn-link.btn-xs.dropdown-toggle[data-toggle='collapse'][href='#bodySyntheticResponseTimeDistribution']");
             wait.until(ExpectedConditions.presenceOfElementLocated(buttonSelector));
 
-            WebElement button = driver.findElement(buttonSelector);
-            String ariaExpandedValue = button.getAttribute("aria-expanded");
+            // Verificar todos los botones abiertos
+            boolean allButtonsOpen = true;
+            for (WebElement button : driver.findElements(buttonSelector)) {
+                String ariaExpandedValue = button.getAttribute("aria-expanded");
+                if (!ariaExpandedValue.equals("true")) {
+                    allButtonsOpen = false;
+                    break;
+                }
+            }
 
-            if (ariaExpandedValue.equals("true")) {
-                // El botón está abierto
-                System.out.println("El botón está abierto");
+            if (allButtonsOpen) {
+                // Todos los botones están abiertos
+                System.out.println("Todos los botones están abiertos");
 
-                // Realiza las acciones relacionadas con el PDF
+                // Realizar las acciones relacionadas con el PDF
                 driver.get("chrome://print");
                 WebElement printPreviewButton = driver.findElement(By.cssSelector(".action-button"));
                 printPreviewButton.click();
@@ -56,8 +63,8 @@ public class HtmlToPdfConverter {
                 saveButton.click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("downloads-item")));
             } else {
-                // El botón está cerrado
-                System.out.println("El botón está cerrado");
+                // Al menos un botón está cerrado
+                System.out.println("Al menos un botón está cerrado");
             }
 
         } finally {
@@ -65,4 +72,5 @@ public class HtmlToPdfConverter {
         }
     }
 }
+
 
