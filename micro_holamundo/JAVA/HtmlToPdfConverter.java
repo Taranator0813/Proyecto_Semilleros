@@ -16,7 +16,6 @@ public class HtmlToPdfConverter {
         options.addArguments("--disable-gpu");
 
         String htmlFilePath = "/home/nuevo-directorio/micro_holamundo/JMETER/ResultadosHTML/index.html";
-
         String pdfOutputPath = "/home/EstefaniaM/workspace/test/archivo_selenium.pdf";
 
         WebDriver driver = new ChromeDriver(options);
@@ -26,34 +25,42 @@ public class HtmlToPdfConverter {
             driver.get("file://" + htmlFilePath);
 
             WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn.btn-link.btn-xs.dropdown-toggle[data-toggle='collapse'][href='#bodySyntheticResponseTimeDistribution']")));
+            By buttonSelector = By.cssSelector(".btn.btn-link.btn-xs.dropdown-toggle[data-toggle='collapse'][href='#bodySyntheticResponseTimeDistribution']");
+            wait.until(ExpectedConditions.presenceOfElementLocated(buttonSelector));
 
-            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-            jsExecutor.executeScript("var buttons = document.querySelectorAll('.btn.btn-link.btn-xs.dropdown-toggle[data-toggle=\"collapse\"][href=\"#bodySyntheticResponseTimeDistribution\"]'); " +
-                                     "for (var i = 0; i < buttons.length; i++) { " +
-                                     "    buttons[i].click(); " +
-                                     "}");
+            WebElement button = driver.findElement(buttonSelector);
+            String ariaExpandedValue = button.getAttribute("aria-expanded");
 
-            driver.get("chrome://print");
-            WebElement printPreviewButton = driver.findElement(By.cssSelector(".action-button"));
-            printPreviewButton.click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".preview-container")));
+            if (ariaExpandedValue.equals("true")) {
+                // El botón está abierto
+                System.out.println("El botón está abierto");
 
-            driver.switchTo().frame(driver.findElement(By.cssSelector("iframe")));
-            WebElement printButton = driver.findElement(By.cssSelector(".action-button"));
-            printButton.click();
-            wait.until(ExpectedConditions.urlContains("pdf"));
+                // Realiza las acciones relacionadas con el PDF
+                driver.get("chrome://print");
+                WebElement printPreviewButton = driver.findElement(By.cssSelector(".action-button"));
+                printPreviewButton.click();
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".preview-container")));
 
-            driver.switchTo().defaultContent();
-            driver.get("chrome://downloads");
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("downloads-item")));
+                driver.switchTo().frame(driver.findElement(By.cssSelector("iframe")));
+                WebElement printButton = driver.findElement(By.cssSelector(".action-button"));
+                printButton.click();
+                wait.until(ExpectedConditions.urlContains("pdf"));
 
-            jsExecutor.executeScript("downloadsManager.setSavePath('" + pdfOutputPath + "');");
-            WebElement saveButton = driver.findElement(By.cssSelector("#save"));
-            saveButton.click();
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("downloads-item")));
+                driver.switchTo().defaultContent();
+                driver.get("chrome://downloads");
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("downloads-item")));
+
+                JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+                jsExecutor.executeScript("downloadsManager.setSavePath('" + pdfOutputPath + "');");
+                WebElement saveButton = driver.findElement(By.cssSelector("#save"));
+                saveButton.click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("downloads-item")));
+            } else {
+                // El botón está cerrado
+                System.out.println("El botón está cerrado");
+            }
+
         } finally {
-
             driver.quit();
         }
     }
